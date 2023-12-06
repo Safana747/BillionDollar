@@ -61,9 +61,10 @@ const SuccessAlert = ({ closeHandler }) => {
                     Upload image file
                   </h3> */}
                   <div class="mt-2">
-                    <div class="mb-3 text-green-600">
-                      File has been successfully uploaded
-                    </div>
+                  <div class="mb-3 text-green-600 ">
+                      
+                  Payment is Done Succusfully✅
+                      </div>
                   </div>
                 </div>
               </div>
@@ -71,10 +72,12 @@ const SuccessAlert = ({ closeHandler }) => {
             <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
               <button
                 type="button"
-                class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto load-animation"
                 onClick={closeHandler}
               >
-                Ok
+                 <span>O</span><span>K</span>
+                
+                
               </button>
             </div>
           </div>
