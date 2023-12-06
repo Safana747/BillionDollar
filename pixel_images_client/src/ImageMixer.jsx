@@ -1,41 +1,44 @@
 import React, { useRef, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "./config/firebase";
 import background from "./assets/image.jpg";
 import { useSelector } from "react-redux";
-import SuccessAlert from "./successAlert";
+import SuccessAlert from "./SuccessAlert";
+import axios from "axios";
+
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:3000/",
+});
 
 const ImageMixer = () => {
   const canvasRef = useRef(null);
   const location = useLocation();
   const images = location?.state?.images;
   const sIndex = location?.state?.sIndex;
+  const userPrefferedPayMethod = location?.state?.userPrefferedPayMethod || true;
   const { data } = useSelector((state) => state.data);
   const [success, setSuccess] = useState(null);
   const navigate = useNavigate();
-
+  // const {images,sIndex,url} = useParams()
+console.log(images,"ssssssssssssssssssssssss")
+console.log(sIndex,"sssssaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
   useEffect(() => {
     data && imageMix();
   }, [images, data]);
-
   useEffect(() => {
-    setSuccess("Pixel has been successfully purchased");
+   setSuccess("added successfully");
     setTimeout(() => {
       setSuccess(null);
-      saveImage();
-    }, 3000);
+    }, 5000);
   }, []);
-
   const imageMix = () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
-
     // Clear the canvas
     context.clearRect(0, 0, canvas.width, canvas.height);
     const bg = new Image();
     bg.src = data.image || background;
-
     // Loop through each image and draw it onto the canvas
     images?.forEach((image, index) => {
       const img = new Image();
@@ -46,7 +49,6 @@ const ImageMixer = () => {
       // Adjust the position based on the image size and index
       const x = image.x; // Adjust this value as needed
       const y = image.y;
-
       // Draw the image onto the canvas
       img.onload = () => {
         bg.onload = () => {
@@ -56,7 +58,6 @@ const ImageMixer = () => {
       };
     });
   };
-
   const saveImage = async () => {
     let indexes = data?.pixel_index || [];
     let linkCordinates = data?.link_cordinates || [];
@@ -80,7 +81,28 @@ const ImageMixer = () => {
       link_cordinates: linkCordinates,
     };
     await setDoc(docRef, value);
-    navigate("/", { state: { refresh: true } });
+    setSuccess(null);
+    if(userPrefferedPayMethod === 'Stripe'){
+        const response = await axiosInstance.post("/", {
+          amount:1000
+        });
+        if (response.data.url) {
+          window.location.href = response.data.url;
+        }
+      };
+      if(userPrefferedPayMethod === 'Paypal'){
+      }
+      if(userPrefferedPayMethod === 'Crypto'){
+        console.log('reached');
+        const response = await axiosInstance.post("/checkout", {
+          amount:1000,
+          currency: 'INR',
+        })
+        console.log(response.data);
+        if (response.data.charge.hosted_url) {
+        window.location.href = response.data.charge.hosted_url;
+        }
+      }
   };
 
   return (
