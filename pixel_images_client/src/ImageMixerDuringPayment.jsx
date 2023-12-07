@@ -92,7 +92,7 @@ console.log(sIndex,"sssssaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
       link_cordinates: linkCordinates,
     };
     await setDoc(docRef, value);
-    setSuccess(null);
+
     if(userPrefferedPayMethod === 'Stripe'){
         const response = await axiosInstance.post("/", {
           amount:1000
@@ -112,6 +112,8 @@ console.log(sIndex,"sssssaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
         console.log(response.data);
         if (response.data.charge.hosted_url) {
         window.location.href = response.data.charge.hosted_url;
+        setTimeout(() => {        setSuccess(null);},3000)
+
         }
       }
   };
