@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
 const FileUpload = ({ closeHandler, sIndex }) => {
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
-  const[paymentOptions, setPaymentOptions] = useState(['Stripe','PayPal','Crypto'])
+  const[paymentOptions, setPaymentOptions] = useState(['Stripe','Crypto'])
   const[userPrefferedPayMethod, setUserPrefferedPayMethod] = useState(null);
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState(null);
