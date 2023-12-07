@@ -184,4 +184,3 @@ const FileUpload = ({ closeHandler, sIndex }) => {
 };
 
 export default FileUpload;
-
