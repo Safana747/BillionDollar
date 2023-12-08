@@ -8,7 +8,7 @@ import SuccessAlertForPaymentGatway from "./SuccessAlertForPaymentGateway";
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000/",
+  baseURL: "http://3.108.52.144/",
 });
 
 const ImageMixer = () => {
