@@ -8,7 +8,7 @@ import SuccessAlert from "./SuccessAlert";
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://3.108.52.144/",
+  baseURL: "http://16.171.175.168:3000/",
 });
 
 const ImageMixer = () => {
